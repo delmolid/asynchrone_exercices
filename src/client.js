@@ -30,3 +30,5 @@ async function updateLanguage(oldLang, newLang) {
 
 getdata();
 updateLanguage('css', 'python');
+
+// 

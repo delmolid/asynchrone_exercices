@@ -24,23 +24,39 @@ app.put("/languages/:name", (req, res) => {
     const index = database.findIndex(lang => lang.toLowerCase() === searchName);
     
     // Vérifie si le langage existe
-    if (index === -1) {
+    if (!(index === -1)) {
         return res.status(404).json({
             error: `Le langage ${req.params.name} n'existe pas dans la base de données`
         });
-    } else if (req.body.language === undefined) {
-        return res.status(400).json({
-            error: "Le langage est obligatoire"
-        });
     } else {  
-    // Remplace le langage
-    database[index] = req.body.language;
-    res.json({ message: "Langage mis à jour avec succès", database: database });
+    // Supprime le langage
+    delete database[index];
+    res.json({ message: "le langage a été supprimé avec succès", database: database });
 }
 
 })
 
 // TODO: DELETE /languages (supprime le langage passé dans le body, par exemple {"language": "c++"})
+
+app.delete("/languages/:name", (req, res) => {
+const search = req.params.name.toLowerCase();
+const index2 = database.findIndex(lang => lang.toLowerCase() === search);
+
+// Vérifie si le langage existe
+if ((index2) === false ) {
+    return res.status(404).json({
+        error: `Le langage ${req.params.name} n'existe pas dans la base de données`
+    });
+
+} else {  
+// Supprimer le language
+database.splice(index2, 1);
+res.json({ message: "le langage a été supprimé avec succès", database: database });
+}
+    
+})
+
+
 
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
