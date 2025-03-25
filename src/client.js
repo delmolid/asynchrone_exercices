@@ -28,7 +28,22 @@ async function updateLanguage(oldLang, newLang) {
     }
 }
 
-getdata();
-updateLanguage('css', 'python');
 
-// 
+
+// Fonction pour supprimer un language de la base des données 
+async function deletelanguage(language) {
+    try {
+    const response = await fetch(`${API_URL}/languages/${language}`, {
+        method:'DELETE',
+    })
+    const result = await response.json();
+    console.log('Résultat après suppression:', result);
+
+    } catch (error){
+        console.error('Erreur lors de la suppression')
+    }
+}
+getdata();
+deletelanguage('python');
+deletelanguage('java');
+

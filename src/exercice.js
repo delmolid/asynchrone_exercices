@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const database = ["html", "css", "javascript"];
+const database = ["html", "css", "javascript", "java", "python"];
 app.use(express.json());
 
 //Ajoute un language dans "database"
