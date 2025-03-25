@@ -1,8 +1,6 @@
-# API Restaurant et Contact
+# Gestionnaire de Langages de Programmation
 
-Ce projet contient deux APIs distinctes :
-1. Une API de menu de restaurant
-2. Une API de contact
+Une application web permettant de gérer une liste de langages de programmation avec une interface utilisateur intuitive.
 
 ## Installation
 
@@ -13,7 +11,7 @@ npm install
 ## Démarrer le serveur
 
 ```bash
-node src/index.js
+npx nodemon src/exercice.js
 ```
 
 Le serveur démarre sur : `http://localhost:3000`
@@ -22,90 +20,94 @@ Le serveur démarre sur : `http://localhost:3000`
 
 ```
 ├── src/
-│   ├── index.js      # Serveur principal
-│   ├── data.json     # Données du menu
-│   ├── testApi.js    # Tests de l'API menu
-│   └── jessica.js    # Tests de l'API contact
+│   ├── exercice.js    # Serveur Express
+│   ├── client.js      # Code JavaScript client
+│   ├── index.html     # Interface utilisateur
+│   └── data.json      # Base de données des langages
 ├── package.json
 └── README.md
 ```
 
 ## Les Routes Disponibles
 
-### 1. API Menu (GET)
+### API Langages
 
-#### Obtenir tout le menu
+#### Obtenir tous les langages (GET)
 ```http
-GET /api/menu
+GET /languages
 ```
 
 Exemple de réponse :
 ```json
 [
-    {
-        "plate": "Hello World Burger",
-        "description": "Un cheeseburger classique",
-        "image": "🍔"
-    },
-    ...
+    "html",
+    "css",
+    "javascript",
+    "python"
 ]
 ```
 
-#### Obtenir un plat spécifique
+#### Modifier un langage (PUT)
 ```http
-GET /api/menu/:plate
-```
-
-### 2. API Contact (POST)
-
-#### Envoyer un numéro
-```http
-POST /api/giveNumber
+PUT /languages/:name
 ```
 
 Body :
 ```json
 {
-    "number": "06XXXXXXXX"
+    "language": "nouveau_langage"
 }
 ```
 
-## Tests des APIs
-
-### Tester l'API Menu
-```bash
-node src/testApi.js
+#### Ajouter un langage (POST)
+```http
+POST /languages
 ```
 
-### Tester l'API Contact
-```bash
-node src/jessica.js
+Body :
+```json
+{
+    "language": "nouveau_langage"
+}
 ```
 
-## Différence entre GET et POST
+#### Supprimer un langage (DELETE)
+```http
+DELETE /languages/:name
+```
 
-### GET (/api/menu)
-- Utilisé pour récupérer les données du menu
-- Paramètres dans l'URL
+## Interface Utilisateur
+
+L'application propose une interface graphique avec :
+- Affichage du nombre de langages
+- Formulaire de modification de langage
+- Formulaire d'ajout de langage
+- Formulaire de suppression de langage
+
+## Différence entre les méthodes HTTP
+
+### GET (/languages)
+- Utilisé pour récupérer la liste des langages
+- Pas de body nécessaire
 - Ne modifie pas les données
-- Exemple : `http://localhost:3000/api/menu`
 
-### POST (/api/giveNumber)
-- Utilisé pour envoyer un numéro
-- Données dans le body de la requête
-- Peut modifier les données
-- Exemple avec fetch :
-```javascript
-fetch('http://localhost:3000/api/giveNumber', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ number: "06XXXXXXXX" })
-})
-```
+### PUT (/languages/:name)
+- Utilisé pour modifier un langage existant
+- Nécessite un body avec le nouveau nom
+- Modifie les données existantes
 
-Ce README est maintenant basé sur votre structure de projet actuelle et inclut tous vos fichiers existants. Il montre comment :
-1. Installer et démarrer le projet
-2. La structure de vos fichiers
-3. Les différentes routes disponibles
-4. Comment tester les APIs
-5. La différence entre GET et POST avec des exemples concrets de votre code
+### POST (/languages)
+- Utilisé pour ajouter un nouveau langage
+- Nécessite un body avec le nom du langage
+- Ajoute de nouvelles données
+
+### DELETE (/languages/:name)
+- Utilisé pour supprimer un langage
+- Pas de body nécessaire
+- Supprime des données existantes
+
+## Utilisation
+
+1. Lancer le serveur avec `npx nodemon src/exercice.js`
+2. Ouvrir `index.html` avec Live Server dans VS Code
+3. Utiliser l'interface pour gérer les langages

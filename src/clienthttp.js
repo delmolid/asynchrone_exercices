@@ -30,6 +30,22 @@ async function updateLanguage(oldLang, newLang) {
     }
 }
 
+// Fonction pour ajouter un language dans la base des données
+async function addlanguage(language) {
+    try {
+        const response = await fetch(`${API_URL}/languages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ language: language })
+        });
+        const result = await response.json();
+        console.log('Résultat après ajout:', result);
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
+    }
+}
 
 
 // Fonction pour supprimer un language de la base des données 
