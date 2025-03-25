@@ -2,6 +2,14 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+// Ajout des headers CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    next();
+});
+
 const database = ["html", "css", "javascript", "java", "python"];
 app.use(express.json());
 
@@ -24,16 +32,18 @@ app.put("/languages/:name", (req, res) => {
     const index = database.findIndex(lang => lang.toLowerCase() === searchName);
     
     // Vérifie si le langage existe
-    if (!(index === -1)) {
+    if (index === -1) {
         return res.status(404).json({
             error: `Le langage ${req.params.name} n'existe pas dans la base de données`
         });
-    } else {  
-    // Supprime le langage
-    delete database[index];
-    res.json({ message: "le langage a été supprimé avec succès", database: database });
-}
-
+    }
+    
+    // Remplace le langage
+    database[index] = req.body.language;
+    res.json({ 
+        message: "Le langage a été modifié avec succès", 
+        database: database 
+    });
 })
 
 // TODO: DELETE /languages (supprime le langage passé dans le body, par exemple {"language": "c++"})

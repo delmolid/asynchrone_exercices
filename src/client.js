@@ -1,4 +1,5 @@
 const API_URL = 'http://localhost:3000';
+let result = document.getElementById('result');
 
 // Fonction pour obtenir les langages
 async function getdata() {
@@ -6,6 +7,7 @@ async function getdata() {
         const response = await fetch(`${API_URL}/languages`);
         const langages = await response.json();
         console.log('Langages actuels:', langages);
+        result.textContent = `Il y a ${langages} langages dans la base de données`;
     } catch (error) {
         console.error('Erreur lors de la récupération des langages:', error);
     }
@@ -44,6 +46,5 @@ async function deletelanguage(language) {
     }
 }
 getdata();
-deletelanguage('python');
-deletelanguage('java');
+
 
